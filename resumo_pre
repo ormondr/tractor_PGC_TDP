@@ -1,0 +1,28 @@
+##### script tractor ########  script adaptado do GitHub da Elizabeth Atinkson    
+
+o que rodou:  phasing 
+
+#####SHAPEIT: 
+shape it:  /home/PGC-TDP/shapeit_v2/bin/shapeit \
+--input-vcf /home/PGC-TDP/tractor_tutorial_data/ADMIX_COHORT/ASW.unphased.vcf.gz \
+--input-map /home/PGC-TDP/tractor_tutorial_data/HAP_REF/chr22.genetic.map.txt \
+--input-ref /home/PGC-TDP/tractor_tutorial_data/HAP_REF/chr22.hap.gz \
+/home/PGC-TDP/tractor_tutorial_data/HAP_REF/chr22.legend.gz \
+/home/PGC-TDP/tractor_tutorial_data/HAP_REF/ALL.sample \
+-O ./testesaida --burn 3 --prune 3 --main 3 --thread 15
+
+
+ D. Converting shapeit output to vcf format.
+Shapeit provides a convenient function to convert from its haps/sample file format to vcf format. 
+Notice in the new vcf file we just created, slashes have changed to the pipe or vertical bar to seperate genotype. 
+Additionally, we can zip the vcf file to save disc space.
+
+/home/PGC-TDP/shapeit_v2/bin/shapeit -convert --input-haps ./testesaida --output-vcf ./testesaida.phased.vcf
+
+##### rfmix   
+/home/PGC-TDP/rfmix/rfmix -f ./testesaida.phased.vcf \
+-r /home/PGC-TDP/tractor_tutorial_data/AFR_EUR_REF/YRI_GBR.phased.vcf.gz \
+-m /home/PGC-TDP/tractor_tutorial_data/AFR_EUR_REF/YRI_GBR.tsv \
+-g /home/PGC-TDP/tractor_tutorial_data/AFR_EUR_REF/chr22.genetic.map.modified.txt \
+-o ./ASW.deconvoluted.msp.tsv \
+--chromosome=22
